@@ -1,40 +1,44 @@
-﻿namespace LeJustePrix
+﻿namespace LeJustePrix;
+
+public class LeJustePrix(int chiffreMinimum = 0, int chiffreMaximum = 100)
 {
-    public class LeJustePrix
+    public int NombreEssais { get; private set; }
+
+    private readonly int _chiffreMinimum = chiffreMinimum;
+    private readonly int _chiffreMaximum = chiffreMaximum;
+
+    public void Lancer()
     {
-        public static int IncrementJeu { get; set; }
+        int chiffreAuHasard = UtilitairesConsole.GenererNombreAleatoire(_chiffreMinimum, _chiffreMaximum);
+        Console.WriteLine($"Un nombre a été choisi au hasard entre {_chiffreMinimum} et {_chiffreMaximum}, essayez de le découvrir !\r\n");
 
-        public static void Lancer()
+        VerifierLeJusteNombre(chiffreAuHasard);
+        Console.WriteLine($"Bravo ! Tu as réussi en {NombreEssais} tentative(s)");
+    }
+
+    public int VerifierLeJusteNombre(int chiffreATrouver)
+    {
+        NombreEssais = 0;
+        while (true)
         {
-            Console.WriteLine("Un chiffre va être choisie au hasard");
-            int chiffreAuHasard = UtilitairesConsole.NombreAleatoire();
+            NombreEssais++;
+            int Chiffre = UtilitairesConsole.DemanderNombre(_chiffreMinimum, _chiffreMaximum);
 
-            LeJustePrix.LeJusteNombre(chiffreAuHasard);
-            Console.WriteLine($"Tu a reussi en : {IncrementJeu} tentative");
-        }
+            //switch (Chiffre)
+            //{
+            //    case < chiffreATrouver : Console.WriteLine("+")
+            //}
 
-        public static int LeJusteNombre(int chiffreATrouver)
-        {
-            IncrementJeu = 0;
-            int ChiffreMinimum = 0;
-            int ChiffreMaximum = 100;
-            while (true)
+            if (Chiffre < chiffreATrouver)
             {
-                IncrementJeu++;
-                Console.WriteLine($"Veuiller saisie un chiffre entre {ChiffreMinimum} et {ChiffreMaximum}");
-                int Chiffre = UtilitairesConsole.SaisieNombre();
-
-                if (Chiffre < chiffreATrouver)
-                {
-                    Console.WriteLine("+");
-                }
-                if (Chiffre > chiffreATrouver)
-                {
-                    Console.WriteLine("-");
-                }
-                if (Chiffre == chiffreATrouver)
-                    return Chiffre;
+                Console.WriteLine("+");
             }
+            if (Chiffre > chiffreATrouver)
+            {
+                Console.WriteLine("-");
+            }
+            if (Chiffre == chiffreATrouver)
+                return Chiffre;
         }
     }
 }

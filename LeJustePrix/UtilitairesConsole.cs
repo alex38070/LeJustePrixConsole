@@ -1,29 +1,25 @@
-﻿namespace LeJustePrix
+﻿namespace LeJustePrix;
+
+public static class UtilitairesConsole
 {
-    public class UtilitairesConsole
+    public static int DemanderNombre(int min, int max)
     {
-        //public int ChiffreMinimum { get; set; } = 0;
-        //public int ChiffreMaximum { get; set; } = 10;
-
-        public static int SaisieNombre()
+        do
         {
-            do
+            Console.Write($"Veuillez saisir un nombre entre {min} et {max} : ");
+            string saisie = Console.ReadLine() ?? string.Empty;
+            bool estNombre = int.TryParse(saisie, out int nombre);
+
+            if (estNombre)
             {
-                string saise = Console.ReadLine();
-                bool estNombre = (int.TryParse(saise, out int nombre));
+                bool estInterval = (nombre >= min && nombre <= max);
 
-                if (estNombre)
+                if (estInterval)
                     return nombre;
+            }
 
-            } while (true);
-        }
-
-        public static int NombreAleatoire()
-        {
-            Random random = new Random();
-            int nombreAleatoire = random.Next(0, 10);
-            return nombreAleatoire;
-        }
-
+        } while (true);
     }
+
+    public static int GenererNombreAleatoire(int min, int max) => Random.Shared.Next(min, max + 1);
 }
